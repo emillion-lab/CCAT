@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Категория С - TOP 100</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  color: #e8f4f8;
+  min-height: 100vh;
+  padding: 10px;
+  overflow-x: hidden;
+}
+@media (min-width: 768px) { body { padding: 20px; } }
+.container { max-width: 1200px; margin: 0 auto; }
+.header {
+  text-align: center;
+  padding: 20px 15px;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 15px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+.header h1 {
+  font-size: 1.8em;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.header .subtitle { font-size: 0.9em; color: #94a3b8; }
+@media (min-width: 768px) {
+  .header { padding: 30px 20px; }
+  .header h1 { font-size: 2.5em; }
+  .header .subtitle { font-size: 1em; }
+}
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  color: #e8f4f8;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.9em;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.tab:hover { background: rgba(255,255,255,0.1); }
+.tab.active {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+@media (min-width: 768px) {
+  .tab { padding: 15px 30px; font-size: 1em; }
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn 0.4s; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+@media (min-width: 768px) {
+  .stats { grid-template-columns: repeat(4, 1fr); gap: 15px; }
+}
+.stat-card {
+  background: rgba(16, 185, 129, 0.1);
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+.stat-card h3 { font-size: 0.75em; color: #94a3b8; margin-bottom: 8px; text-transform: uppercase; }
+.stat-card .number {
+  font-size: 1.8em;
+  font-weight: bold;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@media (min-width: 768px) {
+  .stat-card { padding: 20px; }
+  .stat-card .number { font-size: 2em; }
+}
+.filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.filter-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  color: #e8f4f8;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.85em;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.filter-btn:active { transform: scale(0.95); }
+.filter-btn.active {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-color: transparent;
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
+}
+@media (min-width: 768px) {
+  .filter-btn { padding: 12px 24px; font-size: 0.95em; }
+  .filter-btn:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+}
+.progress-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+  transition: width 0.3s;
+}
+.question-card {
+  background: rgba(16, 185, 129, 0.05);
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+@media (min-width: 768px) { .question-card { padding: 30px; border-radius: 20px; } }
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.question-type {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.75em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.type-LOGIC { background: #10b981; color: white; }
+.type-NUMBERS { background: #f59e0b; color: white; }
+.type-RULES { background: #3b82f6; color: white; }
+.type-SIGNS { background: #8b5cf6; color: white; }
+.type-DOCUMENTS { background: #ec4899; color: white; }
+.question-text {
+  font-size: 1.15em;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+@media (min-width: 768px) { .question-text { font-size: 1.3em; margin-bottom: 20px; } }
+.answers { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+.answer-btn {
+  padding: 14px 16px;
+  border: 2px solid rgba(16, 185, 129, 0.3);
+  border-radius: 10px;
+  background: rgba(16, 185, 129, 0.05);
+  color: #e8f4f8;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  font-size: 0.95em;
+  line-height: 1.4;
+}
+.answer-btn:active { transform: scale(0.98); }
+.answer-btn:hover:not(:disabled) {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.5);
+}
+@media (min-width: 768px) {
+  .answer-btn { padding: 15px 20px; font-size: 1em; }
+  .answer-btn:hover:not(:disabled) { transform: translateX(5px); }
+}
+.answer-btn.correct {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: #10b981;
+  color: #10b981;
+  font-weight: 600;
+}
+.answer-btn.wrong {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+.answer-btn:disabled { cursor: not-allowed; opacity: 0.9; }
+.mnemonic {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.15));
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  border-left: 4px solid #10b981;
+  display: none;
+}
+.mnemonic.show { display: block; animation: fadeIn 0.4s; }
+.mnemonic-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #10b981;
+  font-size: 1em;
+}
+@media (min-width: 768px) {
+  .mnemonic { padding: 20px; }
+  .mnemonic-title { font-size: 1.1em; }
+}
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 10px;
+}
+.nav-btn {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  cursor: pointer;
+  font-size: 0.95em;
+  font-weight: 700;
+  transition: all 0.3s;
+  flex: 1;
+  max-width: 200px;
+}
+.nav-btn:active { transform: scale(0.95); }
+.nav-btn:hover:not(:disabled) { box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); }
+@media (min-width: 768px) {
+  .nav-btn { padding: 15px 30px; font-size: 1em; }
+  .nav-btn:hover:not(:disabled) { transform: translateY(-2px); }
+}
+.nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.topic-header {
+  background: rgba(16, 185, 129, 0.15);
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  border-left: 4px solid #10b981;
+  font-weight: 600;
+  font-size: 0.9em;
+}
+@media (min-width: 768px) { .topic-header { padding: 15px 20px; font-size: 1em; } }
+.cheat-sheet {
+  background: rgba(16, 185, 129, 0.05);
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+.cheat-sheet h2 { color: #10b981; margin-bottom: 15px; font-size: 1.3em; }
+@media (min-width: 768px) {
+  .cheat-sheet { padding: 30px; border-radius: 20px; }
+  .cheat-sheet h2 { font-size: 1.5em; margin-bottom: 20px; }
+}
+.cheat-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 0.85em;
+}
+@media (min-width: 768px) { .cheat-table { font-size: 0.95em; margin-top: 15px; } }
+.cheat-table th,
+.cheat-table td {
+  padding: 10px 8px;
+  text-align: left;
+  border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+}
+@media (min-width: 768px) { .cheat-table th, .cheat-table td { padding: 15px; } }
+.cheat-table th {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  font-weight: 700;
+  font-size: 0.9em;
+}
+.cheat-table td { background: rgba(255,255,255,0.02); }
+.cheat-table strong { color: #10b981; font-weight: 700; }
+.mnemonic-box {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.15));
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin: 10px 0;
+  border-left: 4px solid #10b981;
+  font-style: italic;
+  font-size: 0.9em;
+}
+@media (min-width: 768px) { .mnemonic-box { padding: 15px 20px; font-size: 0.95em; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>🚛 Категория С - TOP 100</h1>
+    <p class="subtitle">100 въпроса • 100% покритие • Оптимизирано за изпита</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('quiz')">📝 Quiz</button>
+    <button class="tab" onclick="showTab('cheat')">📊 Cheat Sheets</button>
+    <button class="tab" onclick="showTab('stats')">📈 Статистика</button>
+  </div>
+
+  <div id="quiz-tab" class="tab-content active">
+    <div class="stats">
+      <div class="stat-card">
+        <h3>Въпроси</h3>
+        <div class="number" id="totalQ">100</div>
+      </div>
+      <div class="stat-card">
+        <h3>Научени</h3>
+        <div class="number" id="learnedQ">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Прогрес</h3>
+        <div class="number" id="progressQ">0%</div>
+      </div>
+      <div class="stat-card">
+        <h3>Точност</h3>
+        <div class="number" id="accuracyQ">0%</div>
+      </div>
+    </div>
+
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">Всички (100)</button>
+      <button class="filter-btn" data-filter="LOGIC">💡 Логика</button>
+      <button class="filter-btn" data-filter="NUMBERS">🔢 Цифри</button>
+      <button class="filter-btn" data-filter="RULES">📋 Правила</button>
+      <button class="filter-btn" data-filter="SIGNS">🚦 Знаци</button>
+      <button class="filter-btn" data-filter="DOCUMENTS">📄 Документи</button>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar"></div>
+    </div>
+
+    <div id="quizContainer"></div>
+
+    <div class="navigation">
+      <button class="nav-btn" id="prevBtn" onclick="prev()">⬅ Назад</button>
+      <button class="nav-btn" id="nextBtn" onclick="next()">Напред ➡</button>
+    </div>
+  </div>
+
+  <div id="cheat-tab" class="tab-content">
+    <div class="cheat-sheet">
+      <h2>🔢 Работно време - ВСИЧКИ ЦИФРИ</h2>
+      <table class="cheat-table">
+        <tr><th>Параметър</th><th>Стойност</th><th>💡 Мнемоника</th></tr>
+        <tr><td>Дневно управление</td><td><strong>9 часа</strong></td><td>9 to 5 работен ден</td></tr>
+        <tr><td>Удължение до 10ч</td><td><strong>2 пъти/седм</strong></td><td>ДВА = ДВЕ ръце</td></tr>
+        <tr><td>Прекъсване след</td><td><strong>4.5 часа</strong></td><td>Време за КАФЕ!</td></tr>
+        <tr><td>Минимум прекъсване</td><td><strong>45 минути</strong></td><td>4.5 → 45 (без точка!)</td></tr>
+        <tr><td>Седмично време</td><td><strong>56 часа</strong></td><td>7 дни × 8 = 56</td></tr>
+        <tr><td>Две седмици</td><td><strong>90 часа</strong></td><td>90° = право ъгъл</td></tr>
+        <tr><td>Дневна почивка</td><td><strong>11 часа</strong></td><td>Половин ден сън</td></tr>
+        <tr><td>Намалена дневна</td><td><strong>9 часа (3× макс)</strong></td><td>9 to 5 минимум</td></tr>
+        <tr><td>Седмична почивка</td><td><strong>45 часа</strong></td><td>Петък до неделя</td></tr>
+        <tr><td>Намалена седмична</td><td><strong>24 часа</strong></td><td>Едно денонощие</td></tr>
+        <tr><td>След макс дни седм почивка</td><td><strong>6 × 24ч</strong></td><td>ШЕСТ денонощия</td></tr>
+      </table>
+    </div>
+
+    <div class="cheat-sheet">
+      <h2>📄 Документи - Срокове</h2>
+      <table class="cheat-table">
+        <tr><th>Документ</th><th>Валидност</th><th>💡</th></tr>
+        <tr><td>Лиценз за превоз</td><td><strong>10 години</strong></td><td>ДЕСЕТилетие</td></tr>
+        <tr><td>Карта квалификация</td><td><strong>5 години</strong></td><td>Петилетка</td></tr>
+        <tr><td>Карта тахограф</td><td><strong>5 години</strong></td><td>Също 5</td></tr>
+        <tr><td>Психол. годност</td><td><strong>3 години</strong></td><td>ТРИгодишна</td></tr>
+        <tr><td>Заявление замяна карта</td><td><strong>7 дни</strong></td><td>Седмица</td></tr>
+        <tr><td>Подновяване карта преди</td><td><strong>15 дни</strong></td><td>15 работни</td></tr>
+      </table>
+    </div>
+
+    <div class="cheat-sheet">
+      <h2>🚗 Товар - Габарити и обозначения</h2>
+      <table class="cheat-table">
+        <tr><th>Позиция</th><th>Без обозначение</th><th>С обозначение</th></tr>
+        <tr><td>Отпред/Отзад</td><td>до 1 м</td><td>над 1 м</td></tr>
+        <tr><td>Отстрани</td><td>до 0.2 м</td><td>над 0.2 м</td></tr>
+      </table>
+      <div class="mnemonic-box">
+        💡 Денем = червен ФЛАГ | Нощем отзад = червена СВЕТЛИНА | Нощем отпред = бяла СВЕТЛИНА
+      </div>
+      <table class="cheat-table">
+        <tr><th>Превоз</th><th>Регламент/Конвенция</th></tr>
+        <tr><td>Лесноразваляеми храни</td><td><strong>ATP</strong></td></tr>
+        <tr><td>Опасни товари</td><td><strong>ADR</strong></td></tr>
+        <tr><td>Международен товар</td><td><strong>CMR</strong></td></tr>
+        <tr><td>Без митн. проверка</td><td><strong>ТИР</strong></td></tr>
+        <tr><td>Многократно межд.</td><td><strong>ЕКМТ</strong></td></tr>
+      </table>
+    </div>
+
+    <div class="cheat-sheet">
+      <h2>🚦 Скорости Категория С</h2>
+      <table class="cheat-table">
+        <tr><th>Тип път</th><th>Km/h</th></tr>
+        <tr><td>В населено място</td><td><strong>50</strong></td></tr>
+        <tr><td>Извън населено място</td><td><strong>90</strong></td></tr>
+        <tr><td>Скоростен път</td><td><strong>110</strong></td></tr>
+        <tr><td>Автомагистрала</td><td><strong>120</strong></td></tr>
+      </table>
+    </div>
+
+    <div class="cheat-sheet">
+      <h2>👥 Превоз на хора</h2>
+      <table class="cheat-table">
+        <tr><th>Параметър</th><th>Стойност</th></tr>
+        <tr><td>Максимум в каросерия</td><td><strong>8 души</strong></td></tr>
+        <tr><td>Правило</td><td><strong>1 тон = 1 човек (макс 8)</strong></td></tr>
+        <tr><td>В товарно ремарке</td><td><strong>НЕ (забранено)</strong></td></tr>
+      </table>
+    </div>
+
+    <div class="cheat-sheet">
+      <h2>🐄 Превоз на животни</h2>
+      <table class="cheat-table">
+        <tr><th>Параметър</th><th>Стойност</th></tr>
+        <tr><td>Макс непрекъснато</td><td><strong>8 часа</strong></td></tr>
+        <tr><td>Храна и вода</td><td><strong>ДА (задължително)</strong></td></tr>
+        <tr><td>Спец изисквания МПС</td><td><strong>ДА (има)</strong></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div id="stats-tab" class="tab-content">
+    <div class="cheat-sheet">
+      <h2>📈 Твоята статистика</h2>
+      <div id="statsContent"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// TOP 100 ВЪПРОСА - 100% ПОКРИТИЕ
+const Q=[
+// === ТЕМА 1: ТАХОГРАФИ (35 въпроса - ВСИЧКИ цифри!) ===
+{i:1,t:"Тема 1",ty:"NUMBERS",q:"Дневно време макс:",a:["8ч","9ч","10ч"],c:1,m:"💡 9=9 to 5",r:["До 10ч 2×"]},
+{i:2,t:"Тема 1",ty:"NUMBERS",q:"Удължение 10ч:",a:["1×седм","2×седм","3×седм"],c:1,m:"💡 ДВА=ръце",r:[]},
+{i:3,t:"Тема 1",ty:"NUMBERS",q:"Седмично макс:",a:["48ч","52ч","56ч","60ч"],c:2,m:"💡 7×8=56",r:[]},
+{i:4,t:"Тема 1",ty:"NUMBERS",q:"2 седмици макс:",a:["80ч","90ч","100ч"],c:1,m:"💡 90°",r:[]},
+{i:5,t:"Тема 1",ty:"NUMBERS",q:"Прекъсване след:",a:["4.5ч","5ч","5.5ч"],c:0,m:"💡 КАФЕ!",r:[]},
+{i:6,t:"Тема 1",ty:"NUMBERS",q:"Мин прекъсване:",a:["15мин","30мин","45мин"],c:2,m:"💡 4.5→45",r:[]},
+{i:7,t:"Тема 1",ty:"NUMBERS",q:"45мин може:",a:["15+30","3×15","25+20"],c:0,m:"💡 15+30",r:[]},
+{i:8,t:"Тема 1",ty:"NUMBERS",q:"Дневна почивка:",a:["9ч","10ч","11ч","12ч"],c:2,m:"💡 11=½ден",r:[]},
+{i:9,t:"Тема 1",ty:"NUMBERS",q:"Намалена дневна:",a:["7ч","8ч","9ч","10ч"],c:2,m:"💡 9 to 5",r:[]},
+{i:10,t:"Тема 1",ty:"NUMBERS",q:"Намалена макс:",a:["1×","2×","3×","4×"],c:2,m:"💡 ТРИ",r:[]},
+{i:11,t:"Тема 1",ty:"NUMBERS",q:"Седмична почивка:",a:["48ч","45ч","42ч"],c:1,m:"💡 пет-нед",r:[]},
+{i:12,t:"Тема 1",ty:"NUMBERS",q:"Намалена седм:",a:["18ч","20ч","24ч","30ч"],c:2,m:"💡 24=1ден",r:[]},
+{i:13,t:"Тема 1",ty:"NUMBERS",q:"След макс дни седм:",a:["5","6","7","8"],c:1,m:"💡 ШЕСТ×24ч",r:[]},
+{i:14,t:"Тема 1",ty:"DOCUMENTS",q:"Карта водач валидност:",a:["1год","5год","10год"],c:1,m:"💡 5год",r:[]},
+{i:15,t:"Тема 1",ty:"LOGIC",q:"Карта е:",a:["персонална","екипажна"],c:0,m:"💡 Лична"},
+{i:16,t:"Тема 1",ty:"LOGIC",q:"Може колко карти:",a:["една","всеки","няколко"],c:0,m:"💡 ЕДНА"},
+{i:17,t:"Тема 1",ty:"NUMBERS",q:"Заявление замяна:",a:["7дни","14дни","30дни"],c:0,m:"💡 7=седм",r:[]},
+{i:18,t:"Тема 1",ty:"NUMBERS",q:"Подновяване преди:",a:["15дни","30дни"],c:0,m:"💡 15раб",r:[]},
+{i:19,t:"Тема 1",ty:"RULES",q:"Повредена разпечатки:",a:["начало/край","прекрати"],c:0,m:"💡 Печатай"},
+{i:20,t:"Тема 1",ty:"RULES",q:"Регламент 561 за:",a:[">3.5т","таксита","всички"],c:0,m:"💡 >3.5т"},
+{i:21,t:"Тема 1",ty:"LOGIC",q:"Регламент територия:",a:["ЕС","регистр","гражданство"],c:0,m:"💡 Цял ЕС"},
+{i:22,t:"Тема 1",ty:"RULES",q:"Извън ЕС:",a:["AETR","Регламент","зависи"],c:0,m:"💡 AETR"},
+{i:23,t:"Тема 1",ty:"RULES",q:"Време управление:",a:["управление","товарене","помощ","почистване"],c:0,m:"💡 Само шофиране"},
+{i:24,t:"Тема 1",ty:"RULES",q:"Друга работа:",a:["товарене","помощ","почистване","управл"],c:0,m:"💡 Първите 3"},
+{i:25,t:"Тема 1",ty:"RULES",q:"Седмица период:",a:["пон-нед","12пон-нед","7дни"],c:0,m:"💡 Пон-нед"},
+{i:26,t:"Тема 1",ty:"RULES",q:"Прекъсване:",a:["не управлява","не работа","възстановяване"],c:0,m:"💡 Първите 2"},
+{i:27,t:"Тема 1",ty:"RULES",q:"Почивка:",a:["свободно","на разположение","работа"],c:0,m:"💡 Свободно"},
+{i:28,t:"Тема 1",ty:"LOGIC",q:"Почивка в МПС:",a:["спряло","спално","екипно"],c:0,m:"💡 Спряло"},
+{i:29,t:"Тема 1",ty:"RULES",q:"Невалидна когато:",a:["загубена","управл над","повредена","друг"],c:0,m:"💡 Всички"},
+{i:30,t:"Тема 1",ty:"LOGIC",q:"Ремонт тахограф:",a:["да","не"],c:1,m:"💡 НЕ"},
+{i:31,t:"Тема 1",ty:"RULES",q:"Аналогов поставя:",a:["преди","час","след"],c:0,m:"💡 Преди"},
+{i:32,t:"Тема 1",ty:"RULES",q:"Контрол аналогов:",a:["ден+28дни","ден+15дни"],c:0,m:"💡 28дни"},
+{i:33,t:"Тема 1",ty:"RULES",q:"Контрол дигитал:",a:["карта+28дни","карта+15дни"],c:0,m:"💡 28дни"},
+{i:34,t:"Тема 1",ty:"NUMBERS",q:"Над 24ч сменя:",a:["24ч","12ч","9ч"],c:0,m:"💡 24ч",r:[]},
+{i:35,t:"Тема 1",ty:"RULES",q:"Регистрира:",a:["разстояние","скорост","корпус","разход"],c:0,m:"💡 Първите 3"},
+
+// === ТЕМА 2: ДОКУМЕНТИ И СКОРОСТИ (25 въпроса) ===
+{i:36,t:"Тема 2",ty:"NUMBERS",q:"Лиценз валидност:",a:["1","5","10"],c:2,m:"💡 10=ДЕСЕТилетие",r:[]},
+{i:37,t:"Тема 2",ty:"DOCUMENTS",q:"Карта квалиф:",a:["1","3","5"],c:2,m:"💡 5год",r:[]},
+{i:38,t:"Тема 2",ty:"NUMBERS",q:"Психол годност:",a:["1","2","3"],c:2,m:"💡 3год",r:[]},
+{i:39,t:"Тема 2",ty:"NUMBERS",q:"Глоба без лиценз:",a:["100","300","500"],c:2,m:"💡 500лв",r:[]},
+{i:40,t:"Тема 2",ty:"NUMBERS",q:"В населено:",a:["30","40","50","60"],c:2,m:"💡 50",r:[]},
+{i:41,t:"Тема 2",ty:"NUMBERS",q:"Извън населено:",a:["60","70","80","90"],c:3,m:"💡 90",r:[]},
+{i:42,t:"Тема 2",ty:"NUMBERS",q:"Автомагистрала:",a:["100","110","120","130"],c:2,m:"💡 120",r:[]},
+{i:43,t:"Тема 2",ty:"NUMBERS",q:"Скоростен:",a:["90","110","120"],c:1,m:"💡 110",r:[]},
+{i:44,t:"Тема 2",ty:"RULES",q:"Кат С маса >:",a:["1500","3000","3500"],c:2,m:"💡 3.5т"},
+{i:45,t:"Тема 2",ty:"NUMBERS",q:"Кат С1 макс:",a:["3500","7500","12000"],c:1,m:"💡 7500",r:[]},
+{i:46,t:"Тема 2",ty:"LOGIC",q:"С може мотор:",a:["да","не"],c:1,m:"💡 НЕ"},
+{i:47,t:"Тема 2",ty:"LOGIC",q:"С може трактор:",a:["да","не"],c:0,m:"💡 ДА"},
+{i:48,t:"Тема 2",ty:"NUMBERS",q:"Хора каросерия:",a:["4","6","8","10"],c:2,m:"💡 8",r:[]},
+{i:49,t:"Тема 2",ty:"RULES",q:"За тон:",a:["1човек макс8","2човека","без"],c:0,m:"💡 1т=1човек"},
+{i:50,t:"Тема 2",ty:"LOGIC",q:"Хора ремарке:",a:["да","не"],c:1,m:"💡 НЕ"},
+{i:51,t:"Тема 2",ty:"DOCUMENTS",q:"CMR за:",a:["международен","вътрешен","двете"],c:0,m:"💡 Международен"},
+{i:52,t:"Тема 2",ty:"DOCUMENTS",q:"ТИР е:",a:["без митн","разрешит","товарна"],c:0,m:"💡 Без митн"},
+{i:53,t:"Тема 2",ty:"LOGIC",q:"ТИР запечатани:",a:["получаващо","първа","последна"],c:0,m:"💡 До край"},
+{i:54,t:"Тема 2",ty:"DOCUMENTS",q:"ЕКМТ разрешит:",a:["многократно","опасен","развал"],c:0,m:"💡 Много пъти"},
+{i:55,t:"Тема 2",ty:"RULES",q:"СЕ нужна:",a:["ремарке>750","няма спир","двуосно"],c:0,m:"💡 >750"},
+{i:56,t:"Тема 2",ty:"RULES",q:"ГО обект:",a:["имуществ","неимуществ","И двете"],c:2,m:"💡 И двете"},
+{i:57,t:"Тема 2",ty:"RULES",q:"ГО застраховани:",a:["собственик","водач","всяко законно"],c:2,m:"💡 Всеки"},
+{i:58,t:"Тема 2",ty:"LOGIC",q:"Без ГО:",a:["спира свид","спира МПС","глоба"],c:1,m:"💡 Спира МПС"},
+{i:59,t:"Тема 2",ty:"LOGIC",q:"Контрол представя:",a:["нарушение","ПТП","винаги"],c:2,m:"💡 Винаги"},
+{i:60,t:"Тема 2",ty:"RULES",q:"Манипулира тахограф:",a:["глоба","лишаване","И двете"],c:2,m:"💡 И двете"},
+
+// === ТЕМА 3: ТОВАР (25 въпроса) ===
+{i:61,t:"Тема 3",ty:"LOGIC",q:"Отговорност маса:",a:["товародател","водач","собственик"],c:0,m:"💡 Товародател"},
+{i:62,t:"Тема 3",ty:"LOGIC",q:"Подреждане наблюдава:",a:["водач","изпращач","превозвач"],c:0,m:"💡 Водачът"},
+{i:63,t:"Тема 3",ty:"LOGIC",q:"Задължение товар:",a:["укрепен","застрахован","опакован"],c:0,m:"💡 Укрепен"},
+{i:64,t:"Тема 3",ty:"LOGIC",q:"Товар трябва:",a:["не светлини","не сигнали","опакован"],c:0,m:"💡 Първите 2"},
+{i:65,t:"Тема 3",ty:"RULES",q:"Покрива когато:",a:["отразява","дъжд","неукрепен"],c:0,m:"💡 Заслепява"},
+{i:66,t:"Тема 3",ty:"NUMBERS",q:"Отпред без обознач:",a:["1м","1.5м","2м"],c:0,m:"💡 1м=стъпка",r:[]},
+{i:67,t:"Тема 3",ty:"NUMBERS",q:"Отзад без обознач:",a:["1м","1.5м","2м"],c:0,m:"💡 1м",r:[]},
+{i:68,t:"Тема 3",ty:"NUMBERS",q:"Отстрани без обознач:",a:["0.2м","0.5м","0.75м","1м"],c:0,m:"💡 0.2м=длан",r:[]},
+{i:69,t:"Тема 3",ty:"RULES",q:"Денем >1м отпред/отзад:",a:["червен флаг","червена светл","бяла"],c:0,m:"💡 Флаг"},
+{i:70,t:"Тема 3",ty:"RULES",q:"Нощем >1м отзад:",a:["флаг","червена светл","бяла"],c:1,m:"💡 Червена"},
+{i:71,t:"Тема 3",ty:"RULES",q:"Нощем >1м отпред:",a:["флаг","червена","бяла светл"],c:2,m:"💡 Бяла"},
+{i:72,t:"Тема 3",ty:"LOGIC",q:"При животни следи:",a:["да","не"],c:0,m:"💡 ДА"},
+{i:73,t:"Тема 3",ty:"LOGIC",q:"Животни храна/вода:",a:["да","не"],c:0,m:"💡 ДА"},
+{i:74,t:"Тема 3",ty:"NUMBERS",q:"Непрекъснато животни:",a:["8ч","10ч","12ч"],c:0,m:"💡 8ч",r:[]},
+{i:75,t:"Тема 3",ty:"DOCUMENTS",q:"ATP регламентира:",a:["лесноразв","опасни","извънгаб"],c:0,m:"💡 ATP=храни"},
+{i:76,t:"Тема 3",ty:"DOCUMENTS",q:"ADR регламентира:",a:["опасни","лесноразв","извънгаб"],c:0,m:"💡 ADR=опасни"},
+{i:77,t:"Тема 3",ty:"RULES",q:"Бруто:",a:["контейнер+товар","контейнер","товар"],c:0,m:"💡 Всичко"},
+{i:78,t:"Тема 3",ty:"RULES",q:"Тара:",a:["ненатоварен","товар","всичко"],c:0,m:"💡 Празен"},
+{i:79,t:"Тема 3",ty:"LOGIC",q:"Тежък разположение:",a:["най-ниско","най-високо","без"],c:0,m:"💡 Ниско"},
+{i:80,t:"Тема 3",ty:"RULES",q:"Остър насочен:",a:["към кабината","встрани","назад"],c:0,m:"💡 Напред"},
+{i:81,t:"Тема 3",ty:"LOGIC",q:"Център след задна ос:",a:["да","не разтоварва"],c:1,m:"💡 НЕ"},
+{i:82,t:"Тема 3",ty:"RULES",q:"Фактори разполагане:",a:["надлъжни","напречни","вятър","тегло"],c:0,m:"💡 Всички 4"},
+{i:83,t:"Тема 3",ty:"LOGIC",q:"Укрепване от МПС:",a:["правилно","неправилно"],c:1,m:"💡 НЕ"},
+{i:84,t:"Тема 3",ty:"LOGIC",q:"Укрепване от форма:",a:["правилно","неправилно"],c:0,m:"💡 ДА"},
+{i:85,t:"Тема 3",ty:"RULES",q:"Наказание неукрепен:",a:["опасност","падне","бавно","не"],c:0,m:"💡 Опасност"},
+
+// === ТЕМА 6: ПТП И ЗНАЦИ (15 въпроса) ===
+{i:86,t:"Тема 6",ty:"LOGIC",q:"Най-честа причина:",a:["грешка водач","път","неизправн","пешеходци"],c:0,m:"💡 Човешка грешка"},
+{i:87,t:"Тема 6",ty:"LOGIC",q:"При ПТП спиране:",a:["без опасност","край","паркинг"],c:0,m:"💡 Безопасност"},
+{i:88,t:"Тема 6",ty:"LOGIC",q:"Задължен мерки:",a:["да винаги","участник","не"],c:0,m:"💡 Винаги"},
+{i:89,t:"Тема 6",ty:"LOGIC",q:"Най-важно:",a:["безопасност","полиция","следи"],c:0,m:"💡 Безопасност"},
+{i:90,t:"Тема 6",ty:"NUMBERS",q:"Телефон 112:",a:["европейски","пътна"],c:0,m:"💡 Спешен"},
+{i:91,t:"Тема 6",ty:"LOGIC",q:"При 112 помощ:",a:["полиция/пожарна","медиц","гр.защита","пътна"],c:0,m:"💡 Първите 3"},
+{i:92,t:"Тема 6",ty:"RULES",q:"Осигуряване колело:",a:["предавка","спирачка","клинове","наклон"],c:0,m:"💡 Първите 3"},
+{i:93,t:"Тема 6",ty:"SIGNS",q:"Забранява >7т:",a:["допустима","товароносим","товар"],c:0,m:"💡 Допустима"},
+{i:94,t:"Тема 6",ty:"SIGNS",q:"Забранява >5т маса товар:",a:["МПС маса товар","товар","товароносим"],c:0,m:"💡 Маса С товар"},
+{i:95,t:"Тема 6",ty:"SIGNS",q:"Забранява >2.5м ширина:",a:["широч+товар","дължина","разстояние"],c:0,m:"💡 Широчина"},
+{i:96,t:"Тема 6",ty:"SIGNS",q:"Забранява >3.5м височина:",a:["височина+товар","дължина","разстояние"],c:0,m:"💡 Височина"},
+{i:97,t:"Тема 6",ty:"SIGNS",q:"Забранява >5т натоварване ос:",a:["натоварване ос","товароносим","маса"],c:0,m:"💡 На ОСта"},
+{i:98,t:"Тема 6",ty:"SIGNS",q:"Забранява опасен:",a:["опасен товар","извънгаб","съчленени"],c:0,m:"💡 Опасен"},
+{i:99,t:"Тема 6",ty:"SIGNS",q:"Забранява >3.5т изпреварване:",a:["МПС без мотор","всички","леки"],c:0,m:"💡 Без мотори"},
+{i:100,t:"Тема 6",ty:"RULES",q:"При колона:",a:["нямам","спирам пропускам","сигнал"],c:1,m:"💡 Спирам"},
+];
+
+let S={ci:0,f:'all',ans:new Set(),cor:new Set(),wr:new Map()};
+
+function init(){
+  load();
+  upd();
+  render();
+  setupFilters();
+}
+
+function load(){
+  const d=localStorage.getItem('catC100');
+  if(d){
+    const p=JSON.parse(d);
+    S.ans=new Set(p.ans||[]);
+    S.cor=new Set(p.cor||[]);
+    S.wr=new Map(p.wr||[]);
+  }
+}
+
+function save(){
+  localStorage.setItem('catC100',JSON.stringify({
+    ans:Array.from(S.ans),
+    cor:Array.from(S.cor),
+    wr:Array.from(S.wr)
+  }));
+}
+
+function upd(){
+  const fq=filt();
+  document.getElementById('totalQ').textContent=fq.length;
+  document.getElementById('learnedQ').textContent=S.ans.size;
+  
+  const pr=fq.length>0?Math.round((S.ci/fq.length)*100):0;
+  document.getElementById('progressQ').textContent=pr+'%';
+  document.getElementById('progressBar').style.width=pr+'%';
+  
+  const acc=S.ans.size>0?Math.round((S.cor.size/S.ans.size)*100):0;
+  document.getElementById('accuracyQ').textContent=acc+'%';
+}
+
+function filt(){
+  if(S.f==='all')return Q;
+  return Q.filter(q=>q.ty===S.f);
+}
+
+function render(){
+  const fq=filt();
+  if(!fq.length){
+    document.getElementById('quizContainer').innerHTML='<p>Няма въпроси</p>';
+    return;
+  }
+  
+  const q=fq[S.ci];
+  const isAns=S.ans.has(q.i);
+  
+  let h=`<div class="question-card">
+    <div class="topic-header">${q.t}</div>
+    <div class="question-header">
+      <span class="question-type type-${q.ty}">${lbl(q.ty)}</span>
+      <span>${S.ci+1}/${fq.length}</span>
+    </div>
+    <div class="question-text">${q.q}</div>
+    <div class="answers">`;
+  
+  q.a.forEach((ans,idx)=>{
+    const isCor=idx===q.c;
+    let cls='answer-btn';
+    if(isAns){
+      if(isCor)cls+=' correct';
+      else if(S.wr.has(q.i)&&S.wr.get(q.i)===idx)cls+=' wrong';
+    }
+    h+=`<button class="${cls}" onclick="check(${q.i},${idx},${isCor})" ${isAns?'disabled':''}>${ans}</button>`;
+  });
+  
+  h+=`</div>`;
+  
+  if(isAns){
+    h+=`<div class="mnemonic show">
+      <div class="mnemonic-title">💡 Как да запомниш:</div>
+      <div>${q.m}</div>
+      ${q.r&&q.r.length>0?'<div style="margin-top:12px"><strong>Свързани:</strong><br>'+q.r.join('<br>')+'</div>':''}
+    </div>`;
+  }
+  
+  h+=`</div>`;
+  
+  document.getElementById('quizContainer').innerHTML=h;
+  
+  document.getElementById('prevBtn').disabled=S.ci===0;
+  document.getElementById('nextBtn').disabled=S.ci>=fq.length-1;
+  
+  upd();
+}
+
+function lbl(ty){
+  const l={'LOGIC':'💡 Логика','NUMBERS':'🔢 Цифри','RULES':'📋 Правила','SIGNS':'🚦 Знаци','DOCUMENTS':'📄 Документи'};
+  return l[ty]||ty;
+}
+
+function check(id,idx,isCor){
+  S.ans.add(id);
+  if(isCor)S.cor.add(id);
+  else S.wr.set(id,idx);
+  save();
+  render();
+}
+
+function next(){
+  const fq=filt();
+  if(S.ci<fq.length-1){
+    S.ci++;
+    render();
+  }
+}
+
+function prev(){
+  if(S.ci>0){
+    S.ci--;
+    render();
+  }
+}
+
+function setupFilters(){
+  document.querySelectorAll('.filter-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      S.f=btn.dataset.filter;
+      S.ci=0;
+      render();
+    });
+  });
+}
+
+function showTab(tab){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(tab+'-tab').classList.add('active');
+  if(tab==='stats')updStats();
+}
+
+function updStats(){
+  const byType={};
+  Q.forEach(q=>{
+    if(!byType[q.ty])byType[q.ty]={tot:0,cor:0,wr:0};
+    byType[q.ty].tot++;
+    if(S.cor.has(q.i))byType[q.ty].cor++;
+    if(S.wr.has(q.i))byType[q.ty].wr++;
+  });
+  
+  let h='<table class="cheat-table"><tr><th>Тип</th><th>Общо</th><th>Верни</th><th>Грешни</th><th>%</th></tr>';
+  Object.keys(byType).forEach(ty=>{
+    const d=byType[ty];
+    const acc=d.cor+d.wr>0?Math.round((d.cor/(d.cor+d.wr))*100):0;
+    h+=`<tr><td>${lbl(ty)}</td><td>${d.tot}</td><td>${d.cor}</td><td>${d.wr}</td><td>${acc}%</td></tr>`;
+  });
+  h+='</table>';
+  document.getElementById('statsContent').innerHTML=h;
+}
+
+init();
+</script>
+</body>
+</html>
