@@ -58,11 +58,11 @@ function pick(ctx,id,i){
 }
 function trNav(d){trIdx=Math.max(0,Math.min(trOrder.length-1,trIdx+d));const q=byId(trOrder[trIdx]);const r=S.ans[q.id];if(r)delete r.last;renderTrain()}
 
-// ---------- ИЗПИТ ----------
-const EXAM_N=30,EXAM_MIN=30,EXAM_PASS=87;
+// ---------- ИЗПИТ (реален формат ИААА кат. C: 30 въпроса, 30 мин, 66 т., праг 57 т.) ----------
+const EXAM_N=30,EXAM_MIN=30,EXAM_MAXPTS=66,EXAM_PASSPTS=57;
 function renderExamHome(){
-  const h=S.exams.slice(-5).reverse().map(e=>`<tr><td>${new Date(e.d).toLocaleDateString('bg')}</td><td>${e.ok}/${e.n}</td><td>${e.pct}%</td><td>${e.pct>=EXAM_PASS?'✅':'❌'}</td></tr>`).join('');
-  document.getElementById('exam-box').innerHTML=`<div class="section"><h2>⏱️ Изпитен симулатор</h2><p>${EXAM_N} случайни въпроса · ${EXAM_MIN} минути · праг за успех ${EXAM_PASS}%. Без обяснения по време на изпита — както на истинския.</p><button class="restart-btn" onclick="startExam()">🚀 Започни изпит</button>${h?`<h2 style="margin-top:25px">Последни опити</h2><table class="table"><tr><th>Дата</th><th>Верни</th><th>%</th><th></th></tr>${h}</table>`:''}</div>`;
+  const h=S.exams.slice(-5).reverse().map(e=>`<tr><td>${new Date(e.d).toLocaleDateString('bg')}</td><td>${e.ok}/${e.n}</td><td>${e.pts!==undefined?e.pts+' т.':e.pct+'%'}</td><td>${(e.pts!==undefined?e.pts>=EXAM_PASSPTS:e.pct>=87)?'✅':'❌'}</td></tr>`).join('');
+  document.getElementById('exam-box').innerHTML=`<div class="section"><h2>⏱️ Изпитен симулатор — реален формат</h2><p>Като на ИААА за категория C: <strong>30 въпроса · 30 минути · праг 57 от 66 точки</strong> (2 листа по 15). Без обяснения по време на изпита.</p><p style="color:#94a3b8;font-size:.9em;margin-top:8px">⚠️ На реалния изпит въпросите тежат 1/2/3 точки и някои имат по няколко верни отговора — тук всеки въпрос е с един верен отговор и точките се изчисляват пропорционално.</p><button class="restart-btn" onclick="startExam()">🚀 Започни изпит</button>${h?`<h2 style="margin-top:25px">Последни опити</h2><table class="table"><tr><th>Дата</th><th>Верни</th><th>Резултат</th><th></th></tr>${h}</table>`:''}</div>`;
 }
 function startExam(){
   const pool=[...QB].sort(()=>Math.random()-0.5).slice(0,EXAM_N);
@@ -89,10 +89,10 @@ function finishExam(){
   clearInterval(exam.timer);
   let ok=0,wrong=[];
   exam.qs.forEach(id=>{const q=byId(id),p=exam.picks[id];if(p===q.c)ok++;else{wrong.push({q,p});const r=rec(id);r.bad++;r.box=1;r.due=Date.now();}});
-  const pct=Math.round(ok/EXAM_N*100);
-  S.exams.push({d:Date.now(),ok,n:EXAM_N,pct});save();
+  const pts=Math.round(ok/EXAM_N*EXAM_MAXPTS),pct=Math.round(ok/EXAM_N*100),passed=pts>=EXAM_PASSPTS;
+  S.exams.push({d:Date.now(),ok,n:EXAM_N,pct,pts});save();
   const rev=wrong.map(w=>qCard(w.q,'rev',{pick:w.p})).join('');
-  document.getElementById('exam-box').innerHTML=`<div class="final-score show"><h2>${pct>=EXAM_PASS?'🎉 ВЗЕТ!':'❌ Не този път'}</h2><div class="percentage">${pct}%</div><p style="font-size:1.2em">Верни: ${ok} от ${EXAM_N} (праг ${EXAM_PASS}%)</p><button class="restart-btn" onclick="startExam()">🔄 Нов изпит</button> <button class="restart-btn" style="background:rgba(148,163,184,0.3)" onclick="renderExamHome()">↩️ Начало</button></div>${wrong.length?'<h2 style="margin:20px 0;color:#ef4444">Грешните ти отговори (влизат в режим Грешки):</h2>'+rev:''}`;
+  document.getElementById('exam-box').innerHTML=`<div class="final-score show"><h2>${passed?'🎉 ВЗЕТ!':'❌ Не този път'}</h2><div class="percentage">${pts} / ${EXAM_MAXPTS} т.</div><p style="font-size:1.2em">Верни: ${ok} от ${EXAM_N} (${pct}%) · праг: ${EXAM_PASSPTS} точки ≈ 26 верни</p><button class="restart-btn" onclick="startExam()">🔄 Нов изпит</button> <button class="restart-btn" style="background:rgba(148,163,184,0.3)" onclick="renderExamHome()">↩️ Начало</button></div>${wrong.length?'<h2 style="margin:20px 0;color:#ef4444">Грешните ти отговори (влизат в режим Грешки):</h2>'+rev:''}`;
   exam=null;
 }
 
